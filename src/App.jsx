@@ -2,6 +2,8 @@
 import './App.css';
 import { useState } from 'react';
 import { ask } from '@tauri-apps/api/dialog';
+import { readText, writeText } from '@tauri-apps/api/clipboard';
+
 const { invoke } = window.__TAURI__.tauri
 
 
@@ -13,9 +15,16 @@ function App() {
   }
   
   const double_click = async () => {
-    const yes = await ask('Are you sure?', 'Tauri');
+    // const yes = await ask('Are you sure?', 'Tauri');
     const yes2 = await ask('This action cannot be reverted. Are you sure?', { title: 'Tauri', type: 'warning' });
+    alert(yes2)
     setCount(count + 2);
+  }
+
+ async function clipboard(){
+   await writeText(await invoke('greet', { name: 'World' }))
+   let text = await readText()
+    alert(text)
   }
   
   // invoke('greet', { name: 'World' })
@@ -32,7 +41,8 @@ function App() {
           Pussy Nigga
         </p>
         <button onDoubleClick={double_click} onClick={increment}> click </button>
-        <button onClick={() => { alert(100) }}>  Show Dialog </button>
+        <br />
+        <button onClick={clipboard}> Clipboard </button>
       </header>
     </div>
   );
