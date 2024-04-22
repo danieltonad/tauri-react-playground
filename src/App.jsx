@@ -3,8 +3,10 @@ import './App.css';
 import { useState } from 'react';
 import { ask } from '@tauri-apps/api/dialog';
 import { readText, writeText } from '@tauri-apps/api/clipboard';
+import { listen } from '@tauri-apps/api/event';
 
 const { invoke } = window.__TAURI__.tauri
+const { emit } = window.__TAURI__.event
 
 
 function App() {
